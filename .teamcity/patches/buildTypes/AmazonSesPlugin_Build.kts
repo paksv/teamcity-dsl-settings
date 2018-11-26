@@ -14,6 +14,7 @@ in the project with id = 'AmazonSesPlugin', and delete the patch script.
 create(RelativeId("AmazonSesPlugin"), BuildType({
     id("AmazonSesPlugin_Build")
     name = "Build"
+    paused = true
 
     vcs {
         root(RelativeId("AmazonSesPlugin_HttpsGithubComJetBrainsTeamCitySESPluginRefsHeadsMaster"))

@@ -12,5 +12,6 @@ in the root project, and delete the patch script.
 create(DslContext.projectId, Project({
     id("AmazonSesPlugin")
     name = "Amazon SES Plugin"
+    archived = true
 }))
 
