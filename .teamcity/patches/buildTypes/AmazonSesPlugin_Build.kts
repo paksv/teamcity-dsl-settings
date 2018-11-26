@@ -21,10 +21,11 @@ create(RelativeId("AmazonSesPlugin"), BuildType({
 
     steps {
         maven {
-            goals = "clean test"
+            goals = "clean package"
             runnerArgs = "-Dmaven.test.failure.ignore=true"
             mavenVersion = defaultProvidedVersion()
             jdkHome = "%env.JDK_16%"
+            param("teamcity.tool.jacoco", "%teamcity.tool.jacoco.DEFAULT%")
         }
     }
 
