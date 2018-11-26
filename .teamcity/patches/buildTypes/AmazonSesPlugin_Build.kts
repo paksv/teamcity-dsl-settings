@@ -2,6 +2,7 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2018_1.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.BuildType
+import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2018_1.ui.*
 
@@ -16,6 +17,15 @@ create(RelativeId("AmazonSesPlugin"), BuildType({
 
     vcs {
         root(RelativeId("AmazonSesPlugin_HttpsGithubComJetBrainsTeamCitySESPluginRefsHeadsMaster"))
+    }
+
+    steps {
+        maven {
+            goals = "clean test"
+            runnerArgs = "-Dmaven.test.failure.ignore=true"
+            mavenVersion = defaultProvidedVersion()
+            jdkHome = "%env.JDK_16%"
+        }
     }
 
     triggers {
