@@ -32,7 +32,7 @@ changeProject(DslContext.projectId) {
             }
         }
         feature1.apply {
-            param("taskDefinition", "ECS-Agent:2")
+            param("cluster", "default")
         }
         val feature2 = find<ProjectFeature> {
             feature {
