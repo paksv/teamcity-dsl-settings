@@ -14,6 +14,28 @@ changeProject(DslContext.projectId) {
     features {
         val feature1 = find<ProjectFeature> {
             feature {
+                type = "CloudImage"
+                id = "PROJECT_EXT_7"
+                param("agentNamePrefix", "")
+                param("agent_pool_id", "0")
+                param("assignPublicIp", "true")
+                param("cluster", "MyCluster")
+                param("cpuReservationLimit", "")
+                param("launchType", "EC2")
+                param("maxInstances", "")
+                param("profileId", "awsecs-1")
+                param("securityGroups", "")
+                param("source-id", "0")
+                param("subnets", "")
+                param("taskDefinition", "ECS-Agent:1")
+                param("taskGroup", "")
+            }
+        }
+        feature1.apply {
+            param("cluster", "default")
+        }
+        val feature2 = find<ProjectFeature> {
+            feature {
                 type = "CloudProfile"
                 id = "awsecs-1"
                 param("agentPushPreset", "")
@@ -37,7 +59,7 @@ changeProject(DslContext.projectId) {
                 param("total-work-time", "")
             }
         }
-        feature1.apply {
+        feature2.apply {
             param("enabled", "true")
         }
     }
