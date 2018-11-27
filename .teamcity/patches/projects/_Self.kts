@@ -38,6 +38,33 @@ changeProject(DslContext.projectId) {
         val feature2 = find<ProjectFeature> {
             feature {
                 type = "CloudProfile"
+                id = "amazon-1"
+                param("agentPushPreset", "")
+                param("cloud-code", "amazon")
+                param("description", "")
+                param("enabled", "true")
+                param("max-running-instances", "")
+                param("name", "EC2")
+                param("next-hour", "")
+                param("not-checked", "")
+                param("profileId", "amazon-1")
+                param("profileServerUrl", "")
+                param("region", "us-west-1")
+                param("secure:access-id", "")
+                param("secure:secret-key", "")
+                param("system.cloud.profile_id", "amazon-1")
+                param("terminate-idle-time", "30")
+                param("total-work-time", "")
+                param("use-instance-iam-role", "true")
+                param("user-script", "")
+            }
+        }
+        feature2.apply {
+            param("enabled", "false")
+        }
+        val feature3 = find<ProjectFeature> {
+            feature {
+                type = "CloudProfile"
                 id = "awsecs-1"
                 param("agentPushPreset", "")
                 param("aws.access.key.id", "")
@@ -60,7 +87,7 @@ changeProject(DslContext.projectId) {
                 param("total-work-time", "")
             }
         }
-        feature2.apply {
+        feature3.apply {
             param("enabled", "true")
         }
     }
