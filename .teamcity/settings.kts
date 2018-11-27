@@ -69,7 +69,7 @@ project {
             id = "PROJECT_EXT_7"
             type = "CloudImage"
             param("cpuReservationLimit", "")
-            param("cluster", "MyCluster")
+            param("cluster", "default")
             param("agentNamePrefix", "")
             param("agent_pool_id", "0")
             param("source-id", "0")
@@ -78,7 +78,7 @@ project {
             param("profileId", "awsecs-1")
             param("securityGroups", "")
             param("subnets", "")
-            param("taskDefinition", "ECS-Agent:1")
+            param("taskDefinition", "ECS-Agent:3")
             param("maxInstances", "")
             param("launchType", "EC2")
         }
@@ -125,7 +125,7 @@ project {
             param("aws.region.name", "us-west-1")
             param("description", "")
             param("cloud-code", "awsecs")
-            param("enabled", "false")
+            param("enabled", "true")
             param("aws.use.default.credential.provider.chain", "true")
             param("agentPushPreset", "")
             param("profileInstanceLimit", "2")
@@ -145,7 +145,50 @@ project {
 
     subProject(TeamCityAmazonEcsPlugin)
     subProject(One)
+    subProject(AmazonSesPlugin)
 }
+
+
+object AmazonSesPlugin : Project({
+    name = "Amazon SES Plugin"
+    archived = true
+
+    vcsRoot(AmazonSesPlugin_HttpsGithubComJetBrainsTeamCitySESPluginRefsHeadsMaster)
+
+    buildType(AmazonSesPlugin_Build)
+})
+
+object AmazonSesPlugin_Build : BuildType({
+    name = "Build"
+    paused = true
+
+    vcs {
+        root(AmazonSesPlugin_HttpsGithubComJetBrainsTeamCitySESPluginRefsHeadsMaster)
+    }
+
+    steps {
+        maven {
+            goals = "clean package"
+            runnerArgs = "-Dmaven.test.failure.ignore=true"
+            mavenVersion = defaultProvidedVersion()
+            param("teamcity.tool.jacoco", "%teamcity.tool.jacoco.DEFAULT%")
+        }
+    }
+
+    triggers {
+        vcs {
+        }
+    }
+})
+
+object AmazonSesPlugin_HttpsGithubComJetBrainsTeamCitySESPluginRefsHeadsMaster : GitVcsRoot({
+    name = "https://github.com/JetBrains/TeamCity.SESPlugin#refs/heads/master"
+    url = "https://github.com/JetBrains/TeamCity.SESPlugin"
+    authMethod = password {
+        userName = "paksv"
+        password = "credentialsJSON:845babb9-cf28-4149-bc82-7fc98e52c0df"
+    }
+})
 
 
 object One : Project({
@@ -238,6 +281,10 @@ object One_PushToEcr : BuildType({
                 dockerRegistryId = "PROJECT_EXT_8"
             }
         }
+    }
+
+    requirements {
+        contains("system.agent.name", "Default Agent")
     }
 })
 
